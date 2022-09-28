@@ -23,7 +23,6 @@ stopWords =["i", "me", "my", "myself", "we", "our", "ours",
              "only", "own", "same", "so", "than", "too", "very",
              "s", "t", "can", "will", "just", "don", "should", "now"]
 
-
 filterCharsAndNormalize :: String -> String
 filterCharsAndNormalize [] = []
 filterCharsAndNormalize (c:cs) =
@@ -42,12 +41,11 @@ wordFrequency xs = foldr (\word acc -> Map.insertWith (+) word 1 acc) Map.empty 
 sortFreq :: Map.Map String Int -> [(String,Int)]
 sortFreq  freqs = sortBy (comparing  (negate . snd)) $ Map.toList freqs
 
-
 printAll :: [(String, Int)] -> String
 printAll freqs = intercalate "\n" $  map(\(s, i) -> s ++ " - " ++ (show i) )  freqs
 
 main = do
   args <- getArgs
   txt <- readFile $ head args
-  (putStrLn . printAll . sortFreq  . wordFrequency . removeStopWords . scan .filterCharsAndNormalize)  txt
+  putStrLn . printAll . sortFreq  . wordFrequency . removeStopWords . scan . filterCharsAndNormalize $ txt
 
